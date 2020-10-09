@@ -2,7 +2,7 @@ function Load_config {
     $config = Get-Content ./config.ps1
     if ($config -eq $null) {
         fatal "Failed to load config. Cannot proceed, Session Exit."
-        Exit-PSSession
+        Exit
     }
     else {
         Info "Config Loaded successfully"

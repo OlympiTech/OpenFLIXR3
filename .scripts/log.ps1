@@ -14,19 +14,26 @@ function start-log {
             Exit-PSSession
         }
     }
-    $logfile = "./logs/$logname"
+    $GLOBAL:logfile = "./logs/$logname"
     touch $logfile
 }
 function info($message) {
     $time = get-date -format hh:mm:ss
     $logmessage = write-host "[INFO $time ] "-NoNewline 6>&1
     $wholemessage = "$logmessage" + " " + "$message" 6>&1
-    Tee-Object -filepath $Logfile -inputObject $wholemessage
+    Tee-Object -append -filepath $Logfile -inputObject $wholemessage
 }
 
 function FATAL($message) {
     $time = get-date -format hh:mm:ss
     $logmessage = write-host "[FATAL $time ] "-NoNewline 6>&1
     $wholemessage = "$logmessage" + " " + "$message" 6>&1
-    Tee-Object -filepath $Logfile -inputObject $wholemessage
+    Tee-Object -append -filepath $Logfile -inputObject $wholemessage
+}
+
+function DEBUG($message) {
+    $time = get-date -format hh:mm:ss
+    $logmessage = write-host "[DEBUG $time ] "-NoNewline 6>&1
+    $wholemessage = "$logmessage" + " " + "$message" 6>&1
+    Tee-Object -append -filepath $Logfile -inputObject $wholemessage
 }
