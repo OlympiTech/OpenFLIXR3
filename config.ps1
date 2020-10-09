@@ -1,1 +1,1 @@
-$INSTALLED = $true
+$INSTALLED = $TRUE
