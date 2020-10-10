@@ -3,3 +3,4 @@ function firstrun {
     info "relaunch of3"
     exit
 }
+
