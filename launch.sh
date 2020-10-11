@@ -1,1 +1,1 @@
-pwsh '/opt/openflixr3/main.ps1'
+pwsh '/opt/openflixr3/main.ps1' $@

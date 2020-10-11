@@ -5,17 +5,11 @@ function start-log {
     $date = (get-date -format yyyyMMdd)
     $logname = "$date`_openflixr3"
     if (test-path ./logs/$logname) {
-        $a = read-host "Log exists. Would you like to overwrite? (Y/N)"
-        if ($a -eq "Y") {
-            rm ./logs/$logname
-        }
-        else {
-            Write-Warning "Log not overwritten. Cannot log. Exit Session"
-            Exit-PSSession
-        }
+        write-host "Log exists"
     }
     $GLOBAL:logfile = "./logs/$logname"
     touch $logfile
+    Tee-Object -append -filepath $Logfile -inputObject "-----START OF LOG-----"
 }
 function info($message) {
     $time = get-date -format hh:mm:ss

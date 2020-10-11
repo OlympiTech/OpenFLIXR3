@@ -1,3 +1,35 @@
+<#
+.NAME
+    OPENFLIXR3
+
+.SYNOPSIS
+  Install or configure t he OpenFLIXR 3 system.
+  
+.DESCRIPTION
+  Install or control elements of the OpenFLIXR 3 system. This includes updating the system, git repo, installing new software released. Docker related commands available too
+
+.NOTES
+  Version:        1.0
+  Author:         -Z3US-
+  Site: http://openflixr.olympiech.co.uk
+  Creation Date:  10/11/2020
+
+.EXAMPLE
+  Update system
+
+  sudo of3 update
+
+.EXAMPLE
+  clean system
+
+  sudo of3 clean
+
+#>
+
+[CmdletBinding()]
+param (
+    $task
+)
 set-location /opt/openflixr3
 
 $scripts = Get-ChildItem "./.scripts"
@@ -5,6 +37,15 @@ foreach ($file in $scripts) {
     . $file
 }
 
+start-log
+switch ($task) {
+    help {get-help ./main.ps1}
+    update {pm_update}
+    clean {pm_clean}
+    default {startup}
+}  
+
+## FUNCTIONS
 function startup {
     start-log
     if (Test-Path "$logfile") {
@@ -38,5 +79,3 @@ function welcome {
         DEBUG "Welcome completed."
         #main_menu
 }
-
-startup

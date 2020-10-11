@@ -12,7 +12,7 @@ function pm_install($package) {
 
 function pm_update {
     info "Removing unused packages."
-    apt-get -y update > $null #|| fatal "Failed to remove unused packages from apt."
+    apt-get -y update #|| fatal "Failed to remove unused packages from apt."
     if (!($? -eq $TRUE)) {
     FATAL "Error updating"
     }
