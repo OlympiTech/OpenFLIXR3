@@ -42,6 +42,7 @@ switch ($task) {
     help {get-help ./main.ps1}
     update {pm_update}
     clean {pm_clean}
+    debug {enabledebug}
     default {startup}
 }  
 
