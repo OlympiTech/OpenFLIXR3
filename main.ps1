@@ -55,12 +55,16 @@ function startup {
         FATAL "Log file failed to spawn. Exiting"
         exit
     }
-    if (!(test-path "./configmarkers/INSTALLED")) {
-        write-host "not"
+    if (!(test-path "./configmarkers/INSTALLED")) {       
+        if ($DEBUG -eq $TRUE) {
+	        debug "Install Marker Missing. Proceeding with First Run."
+        }
         firstrun
     }
-    else {
-        write-host "yes"
+    else {    
+        if ($DEBUG -eq $TRUE) {
+            debug "Install marker present. Contiuing with main system."
+        }
         welcome
     }
 }
