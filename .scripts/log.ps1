@@ -1,3 +1,77 @@
+function GetLogLevel($logLevel) {
+    switch ($logLevel) {
+        ( { $logLevel -ieq 'trace' -or $logLevel -ieq 'trc' }) { return "trace" }
+        ( { $logLevel -ieq 'debug' -or $logLevel -ieq 'dbg' }) { return "debug" }
+        ( { $logLevel -ieq 'info' -or $logLevel -ieq 'inf' }) { return "info" }
+        ( { $logLevel -ieq 'warning' -or $logLevel -ieq 'wrn' }) { return "warn" }
+        ( { $logLevel -ieq 'error' -or $logLevel -ieq 'err' }) { return "error" }
+        ( { $logLevel -ieq 'FATAL' -or $logLevel -ieq 'ftl' }) { return "FATAL" }
+        ( { $logLevel -ieq 'none' -or $logLevel -ieq 'non' }) { return $null }
+        Default { return $null }
+    }
+}
+function GetLogColor($logLevel) {
+    switch ($logLevel) {
+        ( { $logLevel -ieq 'trace' -or $logLevel -ieq 'trc' }) { return "grey" }
+        ( { $logLevel -ieq 'debug' -or $logLevel -ieq 'dbg' }) { return "yellow" }
+        ( { $logLevel -ieq 'info' -or $logLevel -ieq 'inf' }) { return "green" }
+        ( { $logLevel -ieq 'warning' -or $logLevel -ieq 'wrn' }) { return "red" }
+        ( { $logLevel -ieq 'error' -or $logLevel -ieq 'err' }) { return "red" }
+        ( { $logLevel -ieq 'FATAL' -or $logLevel -ieq 'ftl' }) { return "red" }
+        ( { $logLevel -ieq 'none' -or $logLevel -ieq 'non' }) { return $null }
+        Default { return $null }
+    }
+}
+
+function log {
+    param (
+        [Parameter(Mandatory=$true)]
+        [string] $loglevel,
+        [Parameter(Mandatory=$true)]
+        [string] $message
+    )
+
+    #variables
+    $time = get-date -format hh:mm:sss
+    $logtype = getloglevel $loglevel
+    $typeline = switch ($logtype) {
+        trace { "[TRACE $time] "}
+        debug { "[DEBUG $time] "}
+        info { "[INFO $time] "}
+        warn { "[WARN $time] "}
+        error { "[ERROR $time] "}
+        fatal { "[FATAL $time] "}
+    }
+    $logfile = "c:\test.txt"
+    $color = GetLogColor $loglevel
+    write-host $typeline -ForegroundColor $color -NoNewline
+    write-host $message
+    #File logging
+    $wholemessage = "$typeline" + " " + "$message" 6>&1
+    Out-File -FilePath $logfile -Append -InputObject $wholemessage
+
+}
+
+function INFO ($message){
+    log INFO $message
+}
+
+function DEBUG ($message){
+    log DEBUG $message
+}
+
+function FATAL ($message){
+    log FATAL $message
+}
+
+function TRACE ($message){
+    log TRACE $message
+}
+
+function WARN ($message){
+    log WARN $message
+}
+
 function enabledebug () {
     if ((Read-Host "Enable Debug Log? `[Y/N`]") -eq "Y") {
         $debug = $TRUE
@@ -9,38 +83,4 @@ function debugging ($message) {
     if ($debug -eq $true) {
         DEBUG $message
     }
-}
-
-function start-log {
-    if (!(test-path ./logs)) {
-        mkdir ./logs
-    }
-    $date = (get-date -format yyyyMMdd)
-    $logname = "$date`_openflixr3"
-    if (test-path ./logs/$logname) {
-        DEBUGGING "Log exists"
-    }
-    $GLOBAL:logfile = "./logs/$logname"
-    touch $logfile
-    Out-File -filepath $Logfile -inputObject "-----START OF LOG-----"
-}
-function info($message) {
-    $time = get-date -format hh:mm:ss
-    $logmessage = write-host "[INFO $time ] " -ForegroundColor Green -NoNewline 6>&1
-    $wholemessage = "$logmessage" + " " + "$message" 6>&1
-    Tee-Object -append -filepath $Logfile -inputObject $wholemessage
-}
-
-function FATAL($message) {
-    $time = get-date -format hh:mm:ss
-    $logmessage = write-host "[FATAL $time ] " -ForegroundColor Red -NoNewline 6>&1
-    $wholemessage = "$logmessage" + " " + "$message" 6>&1
-    Tee-Object -append -filepath $Logfile -inputObject $wholemessage
-}
-
-function DEBUG($message) {
-    $time = get-date -format hh:mm:ss
-    $logmessage = write-host "[DEBUG $time ] " -ForegroundColor Yellow -NoNewline 6>&1
-    $wholemessage = "$logmessage" + " " + "$message" 6>&1
-    Tee-Object -append -filepath $Logfile -inputObject $wholemessage
 }
