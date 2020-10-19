@@ -10,9 +10,10 @@ function GetLogLevel($logLevel) {
         Default { return $null }
     }
 }
+
 function GetLogColor($logLevel) {
     switch ($logLevel) {
-        ( { $logLevel -ieq 'trace' -or $logLevel -ieq 'trc' }) { return "grey" }
+        ( { $logLevel -ieq 'trace' -or $logLevel -ieq 'trc' }) { return "DarkCyan" }
         ( { $logLevel -ieq 'debug' -or $logLevel -ieq 'dbg' }) { return "yellow" }
         ( { $logLevel -ieq 'info' -or $logLevel -ieq 'inf' }) { return "green" }
         ( { $logLevel -ieq 'warning' -or $logLevel -ieq 'wrn' }) { return "red" }
@@ -42,7 +43,7 @@ function log {
         error { "[ERROR $time] "}
         fatal { "[FATAL $time] "}
     }
-    $logfile = "c:\test.txt"
+
     $color = GetLogColor $loglevel
     write-host $typeline -ForegroundColor $color -NoNewline
     write-host $message
@@ -79,8 +80,22 @@ function enabledebug () {
     startup
 }
 
-function debugging ($message) {
+function dbg ($message) {
     if ($debug -eq $true) {
         DEBUG $message
     }
+}
+
+function start-log {
+    if (!(test-path ./logs)) {
+        mkdir ./logs
+    }
+    $date = (get-date -format yyyyMMdd)
+    $logname = "$date`_openflixr3"
+    if (test-path ./logs/$logname) {
+        Dbg "Log exists"
+    }
+    $GLOBAL:logfile = "./logs/$logname"
+    touch $logfile
+    Out-File -filepath $Logfile -inputObject "-----START OF LOG-----"
 }
