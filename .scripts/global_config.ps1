@@ -1,11 +1,16 @@
 function Load_config {
     $config = Get-Content ./config.ps1
-    if ($config -eq $null) {
-        fatal "Failed to load config. Cannot proceed, Session Exit."
-        Exit
+    if (test-path ./config) {
+        if ($config -eq $null) {
+            fatal "Failed to load config. Cannot proceed, Session Exit."
+            Exit
+        }
+        else {
+            Info "Config Loaded successfully"
+        }
     }
     else {
-        Info "Config Loaded successfully"
+        configcreates
     }
 }
 
@@ -18,4 +23,8 @@ function Save_config {
         FATAL "Configuration did not save. Session Exit."
         Exit-PSSession
     }
+}
+
+function configcreate {
+
 }
