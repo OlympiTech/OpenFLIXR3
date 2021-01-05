@@ -4,10 +4,8 @@
   
 .DESCRIPTION
   Install or control elements of the OpenFLIXR 3 system. This includes updating the system, git repo, installing new software released. Docker related commands available too
-
   Update System 
    > sudo of3 update
-
 .NOTES
   Version:        1.0
   Author:         -Z3US-

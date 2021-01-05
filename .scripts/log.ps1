@@ -32,6 +32,7 @@ function log {
         [string] $message
     )
     #variables
+    $time = (get-date -format hh:mm:ss)
     $logtype = getloglevel $loglevel
     $typeline = switch ($logtype) {
         trace { "[TRACE $time] "}
@@ -82,15 +83,17 @@ function dbg ($message) {
 }
 
 function start-log {
-    if (!(test-path ./logs)) {
-        mkdir ./logs
+    if (!(test-path $rundir/logs)) {
+        dbg "Log directory $rundir/logs does not exist"
+        mkdir $rundir/logs
     }
+    chmod 755 $rundir/logs -R
     $date = (get-date -format yyyyMMdd)
     $logname = "$date`_openflixr3"
-    if (test-path ./logs/$logname) {
+    if (test-path $rundir/logs/$logname) {
         Dbg "Log exists"
     }
-    $GLOBAL:logfile = "./logs/$logname"
+    $GLOBAL:logfile = "$rundir/logs/$logname"
     touch $logfile
     Out-File -filepath $Logfile -inputObject "-----START OF LOG-----"
 }

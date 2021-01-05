@@ -56,7 +56,7 @@ set_permissions() {
         chmod -R a=,a+rX,u+w,g+w "${CH_PATH}" > /dev/null 2>&1 || true
     fi
     echo "Setting executable permission on ${SCRIPTNAME}"
-    chmod +x "${SCRIPTNAME}" > /dev/null 2>&1 || fatal "ds must be executable."
+    chmod +x "${SCRIPTNAME}" > /dev/null 2>&1 || fatal "of3 must be executable."
 }
 
 # User/Group information
