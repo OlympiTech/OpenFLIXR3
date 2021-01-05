@@ -83,11 +83,11 @@ function dbg ($message) {
 }
 
 function start-log {
-    if (!(test-path $rundir/logs)) {
+    if (!(test-path "$rundir/logs")) {
         dbg "Log directory $rundir/logs does not exist"
         mkdir $rundir/logs
     }
-    chmod 755 $rundir/logs -R
+    chmod 755 "$rundir/logs" -R
     $date = (get-date -format yyyyMMdd)
     $logname = "$date`_openflixr3"
     if (test-path $rundir/logs/$logname) {

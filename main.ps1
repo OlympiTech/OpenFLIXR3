@@ -31,6 +31,10 @@ foreach ($file in $scripts) {
 #     }
 # }
 
+$user = whoami
+$rundir = "/home/$user/.openflixr3"
+
+
 start-log
 switch ($task) {
     help {get-help ./main.ps1}
