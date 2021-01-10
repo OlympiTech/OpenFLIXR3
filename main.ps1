@@ -38,8 +38,9 @@ $rundir = "/home/$user/.openflixr3"
 start-log
 switch ($task) {
     help {get-help ./main.ps1}
-    update {pm_update}
-	clean {pm_clean}
-	debug {enabledebug}
+    updatesystem {pm_update}
+	  clean {pm_clean}
+    debug {enabledebug}
+    update {git-upgrade}
     default {startup}
 }

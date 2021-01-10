@@ -2,6 +2,7 @@ function startup {
     if (Test-Path "$logfile") {
         dbg "$logfile Exists."
         Load_config
+        #gitupdate
     }
     else {
         FATAL "Log file failed to spawn. Exiting"
