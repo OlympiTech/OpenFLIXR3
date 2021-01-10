@@ -11,6 +11,8 @@ function welcome {
     read-host
     DEBUGGING "Welcome completed."
     #main_menu
+    #random message
+    
 }
 
 function installmode {
