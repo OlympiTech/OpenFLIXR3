@@ -5,13 +5,6 @@ function git-downgrade {
     #rest of script
 }
 
-
-
-$commits = (git log --format="%ai`t%h`t%an`t%s" -3) | ConvertFrom-Csv -Delimiter "`t" -Header ("Date","Id","Author","Subject")
-
-$lastcommit = (git log --format="%as" -1)   
-    (git log --format="%as`t%h`t%s" -3 --skip=1 --before=$lastcommit) | ConvertFrom-Csv -Delimiter "`t" -Header ("Date","Id","Subject")
-
 function git-upgrade {
     $gitremote = (git rev-parse --short origin)
     $gitlocal = (git rev-parse --short HEAD)
@@ -30,9 +23,22 @@ function git-upgrade {
     }
 }
 
-$GIT_DIFF = git diff
-if ($GIT_DIFF -ne $null) {
-    write-host "OpenFLIXR Setup Script doesn't match with the repository's branch."
-} else {
-    write-host whoopee
+function git-check {
+    $GIT_DIFF = git diff
+    if ($GIT_DIFF -ne $null) {
+        WARN "OpenFLIXR Setup Script doesn't match with the repository's branch.`n"
+        $r = (read-host "Recommend rebasing to latest commit. Would you like to proceed? [Y/N]")
+        if ($r -eq "Y") {
+            git reset
+        } elseif ($r -eq "N") {
+            WARN "Local changes to the code is not supported by OlympiTech. If you have issues, you will be asked to reset to the latest commit before support is offered."
+            write-host "`nPlease press any key to accept liability."
+            read-host
+        } else {
+            return "Please answer Y or N" ;
+        }
+    }
+    else {
+        dbg "The local files are identical to the base commit."
+    }
 }

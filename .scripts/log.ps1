@@ -3,7 +3,7 @@ function GetLogLevel($logLevel) {
         ( { $logLevel -ieq 'trace' -or $logLevel -ieq 'trc' }) { return "trace" }
         ( { $logLevel -ieq 'debug' -or $logLevel -ieq 'dbg' }) { return "debug" }
         ( { $logLevel -ieq 'info' -or $logLevel -ieq 'inf' }) { return "info" }
-        ( { $logLevel -ieq 'warning' -or $logLevel -ieq 'wrn' }) { return "warn" }
+        ( { $logLevel -ieq 'warn' -or $logLevel -ieq 'wrn' }) { return "warn" }
         ( { $logLevel -ieq 'error' -or $logLevel -ieq 'err' }) { return "error" }
         ( { $logLevel -ieq 'FATAL' -or $logLevel -ieq 'ftl' }) { return "FATAL" }
         ( { $logLevel -ieq 'none' -or $logLevel -ieq 'non' }) { return $null }
@@ -16,7 +16,7 @@ function GetLogColor($logLevel) {
         ( { $logLevel -ieq 'trace' -or $logLevel -ieq 'trc' }) { return "DarkCyan" }
         ( { $logLevel -ieq 'debug' -or $logLevel -ieq 'dbg' }) { return "yellow" }
         ( { $logLevel -ieq 'info' -or $logLevel -ieq 'inf' }) { return "green" }
-        ( { $logLevel -ieq 'warning' -or $logLevel -ieq 'wrn' }) { return "red" }
+        ( { $logLevel -ieq 'warn' -or $logLevel -ieq 'wrn' }) { return "red" }
         ( { $logLevel -ieq 'error' -or $logLevel -ieq 'err' }) { return "red" }
         ( { $logLevel -ieq 'FATAL' -or $logLevel -ieq 'ftl' }) { return "red" }
         ( { $logLevel -ieq 'none' -or $logLevel -ieq 'non' }) { return $null }
