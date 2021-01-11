@@ -31,7 +31,7 @@ function git-upgrade {
 }
 
 $GIT_DIFF = git diff
-if ($GIT_DIFF -ne "") {
+if ($GIT_DIFF -ne $null) {
     write-host "OpenFLIXR Setup Script doesn't match with the repository's branch."
 } else {
     write-host whoopee
