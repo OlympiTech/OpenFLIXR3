@@ -1,4 +1,5 @@
-<#
+#Requires 7.1
+#
 .SYNOPSIS
   Install or configure t he OpenFLIXR 3 system.
   
