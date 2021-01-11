@@ -30,6 +30,7 @@ function git-upgrade {
     }
 }
 
+$GIT_DIFF = git diff
 if ($GIT_DIFF -ne "") {
     write-host "OpenFLIXR Setup Script doesn't match with the repository's branch."
 } else {
