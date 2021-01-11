@@ -30,11 +30,22 @@ foreach ($file in $scripts) {
 # 		exit
 #     }
 # }
+function sudocheck {
+  if ($PSVersionTable.Platform -eq 'Unix') {
+    if ((id -u) -eq 0) {
+        write-host "Sudo running. Continuing."
+    } else {
+      write-host "You much run this with SUDO"
+      exit
+    }
+  }
+}
+
 
 $user = whoami
 $rundir = "/home/$user/.openflixr3"
 
-
+#sudocheck
 start-log
 switch ($task) {
     help {get-help ./main.ps1}
