@@ -24,12 +24,6 @@ foreach ($file in $scripts) {
     . $file
 }
 
-# if ($PSVersionTable.Platform -eq 'Unix') {
-#     if (!(id -u) -eq 0) {
-# 		FATAL "This script must be run with `"sudo`""
-# 		exit
-#     }
-# }
 function sudocheck {
   if ($PSVersionTable.Platform -eq 'Unix') {
     if ((id -u) -eq 0) {
@@ -42,10 +36,10 @@ function sudocheck {
 }
 
 
-$user = whoami
+$user = get-childitem env:/SUDO_USER 
 $rundir = "/home/$user/.openflixr3"
 
-#sudocheck
+sudocheck
 start-log
 switch ($task) {
     help {get-help ./main.ps1}
