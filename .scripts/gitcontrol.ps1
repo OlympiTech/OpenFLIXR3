@@ -29,7 +29,7 @@ function gitc {
         WARN "OpenFLIXR Setup Script doesn't match with the repository's branch.`n"
         $r = (read-host "Recommend rebasing to latest commit. Would you like to proceed? [Y/N]")
         if ($r -eq "Y") {
-            #random commit
+            #random commit 2
             git reset --hard
             WARN "System reset and updated to the latest Commit"
             $path = git rev-parse --show-toplevel
