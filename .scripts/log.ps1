@@ -81,7 +81,7 @@ function dbg ($message) {
         DEBUG $message
     }
 }
-
+#comments
 function startlog {
     if (!(test-path "$rundir/logs")) {
         dbg "Log directory $rundir/logs does not exist"
