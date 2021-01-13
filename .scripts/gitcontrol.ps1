@@ -29,7 +29,10 @@ function gitc {
         WARN "OpenFLIXR Setup Script doesn't match with the repository's branch.`n"
         $r = (read-host "Recommend rebasing to latest commit. Would you like to proceed? [Y/N]")
         if ($r -eq "Y") {
-            git reset
+            git reset --hard
+            WARN "System reset and updated to the latest Commit"
+            $path = git rev-parse --show-toplevel
+            chown -R $chowninfo $path
         } elseif ($r -eq "N") {
             WARN "Local changes to the code is not supported by OlympiTech. If you have issues, you will be asked to reset to the latest commit before support is offered."
             write-host "`nPlease press any key to accept liability."
