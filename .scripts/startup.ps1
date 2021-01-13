@@ -2,7 +2,6 @@ function startup {
     if (Test-Path "$logfile") {
         dbg "$logfile Exists."
         Load_config
-        write-host "$config"
         gitc
     }
     else {
