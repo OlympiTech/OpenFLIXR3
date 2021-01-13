@@ -15,37 +15,52 @@
 
 [CmdletBinding()]
 param (
-    $task = ""
+	$script:task = "debug"
 )
+
 set-location /opt/openflixr3
-
 $scripts = Get-ChildItem "./.scripts"
-foreach ($file in $scripts) {
-    . $file
-}
-
+	foreach ($file in $scripts) {
+		. $file
+	}
 function sudocheck {
-  if ($PSVersionTable.Platform -eq 'Unix') {
-    if ((id -u) -eq 0) {
-        write-host "Sudo running. Continuing."
-    } else {
-      write-host "You much run this with SUDO"
-      exit
-    }
-  }
+	if ($PSVersionTable.Platform -eq 'Unix') {
+		if ((id -u) -eq 0) {
+			INFO "Sudo running. Continuing."
+		}
+		else {
+			FATAL "You must run this with SUDO"
+			exit
+		}
+	}
 }
 
+function runtime {
 
-$user = get-childitem env:/SUDO_USER 
-$rundir = "/home/$user/.openflixr3"
-
-sudocheck
-start-log
-switch ($task) {
-    help {get-help ./main.ps1}
-    updatesystem {pm_update}
-	  clean {pm_clean}
-    debug {enabledebug}
-    update {git-upgrade}
-    default {startup}
+	$userinfo = (get-childitem "env:/SUDO_USER") > /dev/null 2>&1
+	$script:user = $userinfo.value 
+	$script:user = "zeus"
+	$script:rundir = "/home/$user/.openflixr3"
+	$script:chowninfo = "$user`:$user"
+	if (!(test-path $rundir)) {
+		write-host "Creating run directory"
+		mkdir "$rundir" || Write-host "Failed"
+		chown $chowninfo $rundir || Write-host "Failed"
+	}
 }
+
+function main {
+	runtime #Initialises the run directory under the user profile
+	startlog #Initialises the logging process'
+	sudocheck #Checks the script was launched using SUDO
+	switch ($task) {
+		help { get-help ./main.ps1 } #Throws help file
+		updatesystem { pm_update } #Updates system packages (APT)
+		clean { pm_clean } #Cleans unused or unrequired packages (APT)
+		debug { enabledebug } #Enables debug messages throughout script
+		update { git-upgrade } #Updates to the latest GIT Commit
+		default { startup } #Starts the main portion of OpenFLixr3
+	}
+}
+
+main

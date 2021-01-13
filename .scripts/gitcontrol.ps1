@@ -1,11 +1,11 @@
-function git-downgrade {
+function gitd {
     $lastcommit = (git log --format="%as" -1)   
     (git log --format="%as`t%h`t%an`t%s" -3 --skip=1 --before=$lastcommit) | ConvertFrom-Csv -Delimiter "`t" -Header ("Date","Id","Author","Subject")
 
     #rest of script
 }
 
-function git-upgrade {
+function gitu {
     $gitremote = (git rev-parse --short origin)
     $gitlocal = (git rev-parse --short HEAD)
 
@@ -23,7 +23,7 @@ function git-upgrade {
     }
 }
 
-function git-check {
+function gitc {
     $GIT_DIFF = git diff
     if ($GIT_DIFF -ne $null) {
         WARN "OpenFLIXR Setup Script doesn't match with the repository's branch.`n"

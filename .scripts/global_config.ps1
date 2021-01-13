@@ -27,6 +27,7 @@ function Load_config {
 
 function Save_config {
     Export-Csv -path "$rundir/ports.csv" -InputObject $config.ports
+    chown $chowninfo "$rundir/ports.csv"
     if ($? -eq $true) {
         info "Ports Exported."
         dbg "Exported ports to $rundir"
@@ -37,6 +38,7 @@ function Save_config {
         Exit-PSSession
     }
     Export-Csv -path "$rundir/dt.csv" -InputObject $config.downloadType
+    chown $chowninfo "$rundir/dt.csv"
     if ($? -eq $true) {
         info "Download type information exported."
         dbg "Exported download type information to $rundir"
@@ -47,6 +49,7 @@ function Save_config {
         Exit-PSSession
     }
     Export-Csv -path "$rundir/state.csv" -InputObject $config.install
+    chown $chowninfo "$rundir/state.csv"
     if ($? -eq $true) {
         info "Installation state exported."
         dbg "Exported installation state to $rundir"

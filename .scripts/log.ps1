@@ -82,12 +82,13 @@ function dbg ($message) {
     }
 }
 
-function start-log {
+function startlog {
     if (!(test-path "$rundir/logs")) {
         dbg "Log directory $rundir/logs does not exist"
         mkdir $rundir/logs
     }
     chmod 755 "$rundir/logs" -R
+    chown $chowninfo "$rundir/logs"
     $date = (get-date -format yyyyMMdd)
     $logname = "$date`_openflixr3"
     if (test-path $rundir/logs/$logname) {
@@ -95,5 +96,6 @@ function start-log {
     }
     $GLOBAL:logfile = "$rundir/logs/$logname"
     touch $logfile
+    chown $chowninfo $logfile
     Out-File -filepath $Logfile -inputObject "-----START OF LOG-----"
 }
