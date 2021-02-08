@@ -15,7 +15,7 @@
 
 [CmdletBinding()]
 param (
-	$script:task = "debug"
+	$script:task = ""
 )
 
 set-location /opt/openflixr3
