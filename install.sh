@@ -70,7 +70,6 @@ INSTALL_DIR="/opt/openflixr3"
 
 main() {
     #cd /opt
-    apt install curl -y
     dependancies
     pwsh
     git clone https://github.com/OlympiTech/OpenFLIXR3 ${INSTALL_DIR}
