@@ -6,7 +6,6 @@ dependancies() {
     echo "Installing dependencies."
     apt-get -y install \
     apt-transport-https \
-    curl \
     git \
     grep \
     sed \
@@ -71,6 +70,7 @@ INSTALL_DIR="/opt/openflixr3"
 
 main() {
     #cd /opt
+    apt install curl -y
     dependancies
     pwsh
     git clone https://github.com/OlympiTech/OpenFLIXR3 ${INSTALL_DIR}
