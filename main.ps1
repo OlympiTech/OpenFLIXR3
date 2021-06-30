@@ -39,7 +39,6 @@ function runtime {
 
 	$userinfo = (get-childitem "env:/SUDO_USER") > /dev/null 2>&1
 	$script:user = $userinfo.value 
-	$script:user = "zeus"
 	$script:rundir = "/home/$user/.openflixr3"
 	$script:chowninfo = "$user`:$user"
 	if (!(test-path $rundir)) {
