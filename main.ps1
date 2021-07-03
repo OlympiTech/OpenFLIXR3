@@ -37,7 +37,8 @@ function sudocheck {
 
 function runtime {
 
-	$userinfo = (get-childitem "env:/SUDO_USER") > /dev/null 2>&1
+	$userinfo = (get-childitem "env:SUDO_USER")
+	get-childitem "env:SUDO_USER"
 	$script:user = $userinfo.value 
 	$script:rundir = "/home/$user/.openflixr3"
 	$script:chowninfo = "$user`:$user"
