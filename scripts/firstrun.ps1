@@ -1,4 +1,4 @@
-function firstrun {
+function firstrun() {
     Info "Performing docker functions. Version check and install"
     dcheck
 
@@ -21,7 +21,7 @@ function firstrun {
 }
 
 function dcheck {
-    $d = (which docker)
+    const d = (which docker)
     if ($null -eq $d) {
         dbg "Docker not installed, performing install"
         dinst
