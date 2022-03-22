@@ -1,3 +1,10 @@
+const { exec } = require('child_process');
+const {INFO, FATAL, WARN, DEBUG} = require('./scripts/log.js')
+
+function isRequired (arg) {
+  throw new Error(`${arg} is a required arguement`);
+}
+
 function getTimeStamp(duration) {
     let date_ob = new Date();
   
@@ -29,9 +36,29 @@ function getTimeStamp(duration) {
     }
 }
 
+function takeOwnership(chownInfo = utils.isRequired(chownInfo), directory = utils.isRequired(directory)) {
+  if ((id - u) === '0') {
+    exec(`chown ${chownInfo} ${directory} -R`, (err) => {
+      if (err) {
+        WARN("Something went wrong with taking ownership.")
+        DEBUG(err)
+        return;
+      }
+    });
+  } else if (!(id - u) === '0') {
+    exec(`sudo chown ${chownInfo} ${directory} -R`, (err) => {
+      if (err) {
+        WARN("Something went wrong with taking ownership.")
+        DEBUG(err)
+      }
+    });
+  }
+}
+
   // All functions above this line
 module.exports = {
-    getTimeStamp,
-    sudoCheck
-
-}
+  getTimeStamp,
+  sudoCheck,
+  isRequired,
+  takeOwnership
+};

@@ -1,9 +1,5 @@
 const utils = require("./utils.js");
 
-function isRequired (arg) {
-  throw new Error(`${arg} is a required arguement`);
-}
-
 function INFO(message) {
 log("INFO", message)
 }
@@ -24,7 +20,7 @@ function WARN (message){
 log(warn, message)
 }
 
-function getLogLevel(levelCode = isRequired(levelCode)) {
+function getLogLevel(levelCode = utils.isRequired(levelCode)) {
   switch (levelCode) {
       case "trace":
           return "trace"
@@ -49,7 +45,7 @@ function getLogLevel(levelCode = isRequired(levelCode)) {
   }
 }
 
-function getColor (levelCode = isRequired(levelCode)) {
+function getColor (levelCode = utils.isRequired(levelCode)) {
   switch (levelCode) {
     case "trace":
       return "\x1b[36m"
@@ -74,7 +70,7 @@ function getColor (levelCode = isRequired(levelCode)) {
   }
 }
 
-function log (level = isRequired("logLevel"), message = isRequired("message to be displayed")) {
+function log (level = utils.isRequired("logLevel"), message = utils.isRequired("message to be displayed")) {
   const timestamp = utils.getTimeStamp("timeDate")
   const logType = getLogLevel(level)
   switch (logType) {
@@ -104,5 +100,3 @@ function log (level = isRequired("logLevel"), message = isRequired("message to b
   console.log(logColor, typeLine + ":" + " " + message + "]")
   // Logging to file next
 }
-
-INFO("This is some shit")
